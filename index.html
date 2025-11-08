@@ -1,113 +1,777 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RoadTrip Expert - Ton guide de voyage personnalisé</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  /* Reset & font */
-  * {margin:0; padding:0; box-sizing:border-box; font-family:'Roboto', sans-serif;}
-  body {background:#f9f9f9; color:#333;}
-  a {text-decoration:none; color:inherit;}
-  
-  /* Header */
-  header {background:#0D3B66; color:white; padding:50px 20px; text-align:center;}
-  header h1 {font-size:3em; margin-bottom:10px;}
-  header p {font-size:1.2em;}
-  
-  /* Section accueil */
-  .hero {display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 20px;}
-  .hero img {max-width:90%; border-radius:15px; margin-top:30px; box-shadow:0 5px 15px rgba(0,0,0,0.2);}
-  
-  /* Section formules */
-  .plans {display:flex; flex-wrap:wrap; justify-content:center; margin:50px 0; gap:20px; padding:0 20px;}
-  .plan {background:white; border-radius:15px; padding:30px; width:300px; box-shadow:0 5px 20px rgba(0,0,0,0.1); text-align:center; transition:transform 0.3s;}
-  .plan:hover {transform:translateY(-10px);}
-  .plan h2 {color:#0D3B66; margin-bottom:20px;}
-  .plan ul {list-style:none; margin-bottom:20px;}
-  .plan ul li {margin:10px 0;}
-  .plan .price {font-size:2em; font-weight:bold; color:#EE6C4D; margin-bottom:20px;}
-  .plan button {background:#EE6C4D; color:white; border:none; padding:15px 30px; border-radius:10px; cursor:pointer; font-size:1em; transition:0.3s;}
-  .plan button:hover {background:#ff7b5c;}
-  
-  /* Section contact */
-  .contact {background:#0D3B66; color:white; padding:60px 20px; text-align:center;}
-  .contact h2 {margin-bottom:30px;}
-  .contact form {max-width:500px; margin:0 auto; display:flex; flex-direction:column; gap:15px;}
-  .contact input, .contact textarea {padding:15px; border-radius:10px; border:none; font-size:1em;}
-  .contact button {background:#EE6C4D; color:white; border:none; padding:15px 30px; border-radius:10px; cursor:pointer; font-size:1em;}
-  .contact button:hover {background:#ff7b5c;}
-  
-  /* Footer */
-  footer {text-align:center; padding:30px 20px; background:#0D3B66; color:white;}
-  
-  @media(max-width:960px){ .plans {flex-direction:column; align-items:center;} }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadbook Eloan Calmels | 7-10 Décembre 2024</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+        }
+
+        .header-title {
+            font-size: 3em;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .client-name {
+            font-size: 2.5em;
+            color: #764ba2;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .dates {
+            font-size: 1.5em;
+            color: #555;
+            margin-top: 10px;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .info-item {
+            background: #667eea;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #667eea;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .day-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: none;
+        }
+
+        .day-card.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .day-title {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .day-location {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        .activity-section {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .activity-time {
+            display: inline-block;
+            background: #764ba2;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .activity-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .activity-description {
+            color: #555;
+            font-size: 1.1em;
+            margin: 10px 0;
+        }
+
+        .icon {
+            margin-right: 8px;
+        }
+
+        .tips-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .tips-title {
+            color: #856404;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .restaurant-card, .hotel-card {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .transport-info {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .price-tag {
+            background: #28a745;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 5px 0;
+        }
+
+        footer {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .contacts {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            gap: 20px;
+        }
+
+        .contact-item {
+            background: #f8f9ff;
+            padding: 15px 25px;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header-title { font-size: 2em; }
+            .client-name { font-size: 1.8em; }
+            .dates { font-size: 1.2em; }
+            .info-bar { flex-direction: column; }
+        }
+
+        .map-placeholder {
+            background: #e9ecef;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            border: 2px dashed #667eea;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <div class="header-title">🗺️ ROADBOOK EXCLUSIF</div>
+            <div class="client-name">ELOAN CALMELS</div>
+            <div class="dates">📅 7 - 10 Décembre 2024</div>
+            <div class="info-bar">
+                <div class="info-item">🎄 Alsace & Paris</div>
+                <div class="info-item">⏱️ 4 jours</div>
+                <div class="info-item">🎅 Spécial Noël</div>
+            </div>
+        </header>
 
-<!-- Header -->
-<header>
-  <h1>RoadTrip Expert</h1>
-  <p>Ton guide de voyage personnalisé – explore, découvre et profite sans stress</p>
-</header>
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="showDay(1)">📍 Jour 1</button>
+            <button class="tab-btn" onclick="showDay(2)">📍 Jour 2</button>
+            <button class="tab-btn" onclick="showDay(3)">📍 Jour 3</button>
+            <button class="tab-btn" onclick="showDay(4)">📍 Jour 4</button>
+            <button class="tab-btn" onclick="showDay(5)">ℹ️ Infos Pratiques</button>
+        </nav>
 
-<!-- Hero image -->
-<section class="hero">
-  <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" alt="Voyage Road Trip">
-</section>
+        <!-- JOUR 1 -->
+        <div class="day-card active" id="day1">
+            <div class="day-header">
+                <div class="day-title">🎄 JOUR 1 - Samedi 7 Décembre</div>
+                <div class="day-location">Paris → Strasbourg</div>
+            </div>
 
-<!-- Formules -->
-<section class="plans">
-  <div class="plan">
-    <h2>Formule Essentiel</h2>
-    <ul>
-      <li>Endroits à visiter</li>
-      <li>Itinéraire complet</li>
-    </ul>
-    <div class="price">25€</div>
-    <button>Acheter</button>
-  </div>
-  <div class="plan">
-    <h2>Formule Pratique</h2>
-    <ul>
-      <li>Endroits à visiter</li>
-      <li>Itinéraire complet</li>
-      <li>Conseils pratiques</li>
-    </ul>
-    <div class="price">50€</div>
-    <button>Acheter</button>
-  </div>
-  <div class="plan">
-    <h2>Formule Premium</h2>
-    <ul>
-      <li>Tout Formule Pratique</li>
-      <li>Hébergements conseillés</li>
-      <li>Escales & extras</li>
-      <li>Aide personnalisée</li>
-    </ul>
-    <div class="price">100€</div>
-    <button>Acheter</button>
-  </div>
-</section>
+            <div class="activity-section">
+                <div class="activity-time">⏰ 07:00 - 09:00</div>
+                <div class="activity-title">🚄 Départ de Paris</div>
+                <div class="transport-info">
+                    <strong>Train TGV Paris Est → Strasbourg</strong><br>
+                    Durée: 1h45<br>
+                    <span class="price-tag">~60-80€</span>
+                </div>
+                <div class="activity-description">
+                    Départ matinal pour profiter au maximum de la journée à Strasbourg. Pensez à réserver vos billets à l'avance pour un meilleur tarif.
+                </div>
+            </div>
 
-<!-- Contact -->
-<section class="contact">
-  <h2>Contactez-nous</h2>
-  <form>
-    <input type="text" placeholder="Nom" required>
-    <input type="email" placeholder="Email" required>
-    <textarea placeholder="Votre message..." rows="5" required></textarea>
-    <button type="submit">Envoyer</button>
-  </form>
-</section>
+            <div class="activity-section">
+                <div class="activity-time">⏰ 10:00 - 13:00</div>
+                <div class="activity-title">🏨 Installation & Découverte Centre-Ville</div>
+                <div class="hotel-card">
+                    <strong>🏨 Hôtel recommandé: Hôtel Cathédrale</strong><br>
+                    📍 12-13 Place de la Cathédrale<br>
+                    ⭐ Vue sur la Cathédrale<br>
+                    <span class="price-tag">~120€/nuit</span>
+                </div>
+                <div class="activity-description">
+                    Installation rapide puis promenade dans la Petite France, le quartier le plus pittoresque de Strasbourg.
+                </div>
+            </div>
 
-<!-- Footer -->
-<footer>
-  &copy; 2025 RoadTrip Expert – Tous droits réservés
-</footer>
+            <div class="activity-section">
+                <div class="activity-time">⏰ 13:00 - 14:30</div>
+                <div class="activity-title">🍽️ Déjeuner Alsacien</div>
+                <div class="restaurant-card">
+                    <strong>🍴 Chez Yvonne</strong><br>
+                    📍 10 Rue du Sanglier<br>
+                    🥨 Spécialités: Choucroute, Baeckeoffe<br>
+                    <span class="price-tag">25-35€</span>
+                </div>
+            </div>
 
+            <div class="activity-section">
+                <div class="activity-time">⏰ 15:00 - 19:00</div>
+                <div class="activity-title">🎅 Marché de Noël de Strasbourg</div>
+                <div class="activity-description">
+                    <strong>Points incontournables:</strong><br>
+                    ✨ Place Broglie - Grand sapin de Noël<br>
+                    ✨ Place de la Cathédrale - Marché traditionnel<br>
+                    ✨ Place Kléber - Animations<br>
+                    ✨ Petite France - Illuminations<br><br>
+                    <strong>À goûter:</strong> Vin chaud, bretzel, pain d'épices
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 19:30 - 21:30</div>
+                <div class="activity-title">🌙 Dîner & Soirée</div>
+                <div class="restaurant-card">
+                    <strong>🍴 Au Pont Saint-Martin</strong><br>
+                    📍 13-15 Rue des Moulins<br>
+                    🍷 Gastronomie alsacienne raffinée<br>
+                    <span class="price-tag">35-50€</span>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <div class="tips-title">💡 Conseils du jour</div>
+                ✅ Arrivez tôt sur les marchés pour éviter la foule<br>
+                ✅ Prenez de l'espèce pour les petits stands<br>
+                ✅ Habillez-vous chaudement (température ~5°C)<br>
+                ✅ Téléchargez l'app "Strasbourg ça se visite"
+            </div>
+        </div>
+
+        <!-- JOUR 2 -->
+        <div class="day-card" id="day2">
+            <div class="day-header">
+                <div class="day-title">🍷 JOUR 2 - Dimanche 8 Décembre</div>
+                <div class="day-location">Route des Vins d'Alsace</div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 08:00 - 09:00</div>
+                <div class="activity-title">🥐 Petit-déjeuner</div>
+                <div class="restaurant-card">
+                    <strong>☕ Christian Pâtisserie</strong><br>
+                    📍 10 Rue de l'Outre<br>
+                    🥐 Spécialités: Kougelhopf, pain d'épices<br>
+                    <span class="price-tag">10-15€</span>
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 09:30 - 11:30</div>
+                <div class="activity-title">🚗 Départ vers Colmar</div>
+                <div class="transport-info">
+                    <strong>Train Strasbourg → Colmar</strong><br>
+                    Durée: 30 min<br>
+                    <span class="price-tag">~15€</span><br>
+                    Alternative: Location voiture pour flexibilité
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 11:30 - 14:00</div>
+                <div class="activity-title">🏘️ Colmar - Petite Venise</div>
+                <div class="activity-description">
+                    <strong>À visiter:</strong><br>
+                    ✨ Quartier de la Petite Venise<br>
+                    ✨ Maison Pfister (architecture typique)<br>
+                    ✨ Musée Unterlinden (si temps)<br>
+                    ✨ Marché de Noël de Colmar (5 marchés différents!)<br><br>
+                    <strong>🍴 Déjeuner sur place</strong>
+                </div>
+                <div class="restaurant-card">
+                    <strong>🍴 Wistub de la Petite Venise</strong><br>
+                    📍 4 Rue de la Poissonnerie<br>
+                    <span class="price-tag">20-30€</span>
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 15:00 - 17:00</div>
+                <div class="activity-title">🏰 Riquewihr - Plus Beau Village</div>
+                <div class="activity-description">
+                    Village médiéval classé parmi les plus beaux de France<br>
+                    🍷 Dégustation de vins dans une cave locale<br>
+                    🎄 Marché de Noël authentique<br>
+                    📸 Photos dans les ruelles pavées
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 18:00 - 20:00</div>
+                <div class="activity-title">🔙 Retour Strasbourg</div>
+                <div class="activity-description">
+                    Retour à Strasbourg pour la soirée
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 20:30</div>
+                <div class="activity-title">🍽️ Dîner à Strasbourg</div>
+                <div class="restaurant-card">
+                    <strong>🍴 Le Tire-Bouchon</strong><br>
+                    📍 5 Rue des Tailleurs de Pierre<br>
+                    🍷 Ambiance winstub authentique<br>
+                    <span class="price-tag">25-40€</span>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <div class="tips-title">💡 Conseils du jour</div>
+                ✅ Partez tôt pour optimiser le temps<br>
+                ✅ Riquewihr est très fréquenté le dimanche<br>
+                ✅ Prévoyez de bonnes chaussures de marche<br>
+                ✅ Achetez du vin local comme souvenir
+            </div>
+        </div>
+
+        <!-- JOUR 3 -->
+        <div class="day-card" id="day3">
+            <div class="day-header">
+                <div class="day-title">✨ JOUR 3 - Lundi 9 Décembre</div>
+                <div class="day-location">Strasbourg → Paris</div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 09:00 - 11:00</div>
+                <div class="activity-title">🎄 Dernière balade alsacienne</div>
+                <div class="activity-description">
+                    ☕ Petit-déjeuner tranquille<br>
+                    📸 Dernières photos de Strasbourg<br>
+                    🛍️ Shopping de dernière minute (pain d'épices, bredele)
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 11:30 - 13:15</div>
+                <div class="activity-title">🚄 Train vers Paris</div>
+                <div class="transport-info">
+                    <strong>TGV Strasbourg → Paris Est</strong><br>
+                    Durée: 1h45<br>
+                    <span class="price-tag">~60-80€</span>
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 14:00 - 16:00</div>
+                <div class="activity-title">🏨 Installation Paris</div>
+                <div class="hotel-card">
+                    <strong>🏨 Hôtel recommandé: Hôtel Provinces Opéra</strong><br>
+                    📍 Quartier Opéra / Grands Boulevards<br>
+                    🚇 Métro direct pour tous les sites<br>
+                    <span class="price-tag">~150€/nuit</span>
+                </div>
+                <div class="activity-description">
+                    🍽️ Déjeuner rapide en arrivant
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 16:00 - 19:00</div>
+                <div class="activity-title">✨ Champs-Élysées & Arc de Triomphe</div>
+                <div class="activity-description">
+                    <strong>Programme:</strong><br>
+                    ✨ Marché de Noël des Champs-Élysées<br>
+                    ✨ Illuminations de l'avenue (plus belle avenue du monde!)<br>
+                    ✨ Arc de Triomphe<br>
+                    ✨ Shopping dans les boutiques<br>
+                    📸 Photos devant les décorations
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 19:30 - 21:00</div>
+                <div class="activity-title">🗼 Tour Eiffel illuminée</div>
+                <div class="activity-description">
+                    🌟 Spectacle des illuminations (toutes les heures)<br>
+                    📸 Photos nocturnes depuis le Trocadéro<br>
+                    ✨ Ambiance magique de Noël
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 21:30</div>
+                <div class="activity-title">🍽️ Dîner parisien</div>
+                <div class="restaurant-card">
+                    <strong>🍴 Le Relais de l'Entrecôte</strong><br>
+                    📍 15 Rue Marbeuf (près Champs-Élysées)<br>
+                    🥩 Spécialité: Entrecôte-frites sauce secrète<br>
+                    <span class="price-tag">Menu unique ~30€</span>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <div class="tips-title">💡 Conseils du jour</div>
+                ✅ Libérez votre chambre d'hôtel à Strasbourg avant 11h<br>
+                ✅ Les Champs-Élysées sont bondés en soirée<br>
+                ✅ Réservez le restaurant à l'avance<br>
+                ✅ Achetez un carnet de tickets de métro (économique)
+            </div>
+        </div>
+
+        <!-- JOUR 4 -->
+        <div class="day-card" id="day4">
+            <div class="day-header">
+                <div class="day-title">🎨 JOUR 4 - Mardi 10 Décembre</div>
+                <div class="day-location">Paris - Dernière journée</div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 08:30 - 10:00</div>
+                <div class="activity-title">🥐 Petit-déjeuner parisien</div>
+                <div class="restaurant-card">
+                    <strong>☕ Angelina</strong><br>
+                    📍 226 Rue de Rivoli<br>
+                    ☕ Célèbre chocolat chaud & pâtisseries<br>
+                    <span class="price-tag">15-25€</span>
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 10:00 - 13:00</div>
+                <div class="activity-title">🎨 Montmartre & Sacré-Cœur</div>
+                <div class="activity-description">
+                    <strong>Parcours:</strong><br>
+                    ✨ Basilique du Sacré-Cœur<br>
+                    ✨ Place du Tertre (artistes peintres)<br>
+                    ✨ Mur des Je t'aime<br>
+                    ✨ Moulin de la Galette<br>
+                    ✨ Marché de Noël de Montmartre<br>
+                    📸 Vue panoramique sur Paris
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 13:00 - 14:30</div>
+                <div class="activity-title">🍽️ Déjeuner à Montmartre</div>
+                <div class="restaurant-card">
+                    <strong>🍴 La Maison Rose</strong><br>
+                    📍 2 Rue de l'Abreuvoir<br>
+                    🎨 Restaurant mythique et photogénique<br>
+                    <span class="price-tag">25-35€</span>
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 15:00 - 17:00</div>
+                <div class="activity-title">🛍️ Au choix</div>
+                <div class="activity-description">
+                    <strong>Option 1: Shopping</strong><br>
+                    🛍️ Galeries Lafayette & Printemps Haussmann<br>
+                    🎄 Vitrines de Noël animées<br><br>
+                    
+                    <strong>Option 2: Culture</strong><br>
+                    🖼️ Musée du Louvre (réservation obligatoire)<br>
+                    🏛️ Musée d'Orsay<br><br>
+                    
+                    <strong>Option 3: Balade</strong><br>
+                    🌳 Jardin des Tuileries<br>
+                    🏛️ Palais Royal
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 17:30 - 19:00</div>
+                <div class="activity-title">🎄 Dernière balade</div>
+                <div class="activity-description">
+                    ✨ Île de la Cité & Notre-Dame (extérieur)<br>
+                    ✨ Quartier Latin<br>
+                    ✨ Saint-Germain-des-Prés<br>
+                    📸 Dernières photos souvenirs
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-time">⏰ 20:00</div>
+                <div class="activity-title">🍽️ Dîner de clôture</div>
+                <div class="restaurant-card">
+                    <strong>🍴 Bouillon Chartier</strong><br>
+                    📍 7 Rue du Faubourg Montmartre<br>
+                    🏛️ Institution parisienne depuis 1896<br>
+                    💰 Cuisine traditionnelle à prix doux<br>
+                    <span class="price-tag">15-25€</span>
+                </div>
+                <div class="activity-description">
+                    Alternative haut de gamme:<br>
+                    <strong>Le Train Bleu</strong> (Gare de Lyon) - Décor Belle Époque
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <div class="tips-title">💡 Conseils du jour</div>
+                ✅ Montmartre = montée, portez de bonnes chaussures<br>
+                ✅ Les Galeries Lafayette: montez sur le toit (vue gratuite)<br>
+                ✅ Vérifiez votre train/vol de retour<br>
+                ✅ Bouillon Chartier: pas de réservation, file d'attente possible
+            </div>
+        </div>
+
+        <!-- INFOS PRATIQUES -->
+        <div class="day-card" id="day5">
+            <div class="day-header">
+                <div class="day-title">ℹ️ INFORMATIONS PRATIQUES</div>
+                <div class="day-location">Tout ce qu'il faut savoir</div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-title">💰 Budget Estimé</div>
+                <div class="activity-description">
+                    <strong>Transport:</strong><br>
+                    • Paris ↔ Strasbourg: 120-160€<br>
+                    • Strasbourg → Colmar: 15-30€<br>
+                    • Métro/transports Paris: 30€<br>
+                    <strong>Total transport: ~200€</strong><br><br>
+
+                    <strong>Hébergement:</strong><br>
+                    • Strasbourg (2 nuits): 240€<br>
+                    • Paris (1 nuit): 150€<br>
+                    <strong>Total hébergement: ~390€</strong><br><br>
+
+                    <strong>Restauration:</strong><br>
+                    • 4 jours (3 repas/jour): 300-400€<br><br>
+
+                    <strong>Activités & Shopping:</strong><br>
+                    • Souvenirs, vin chaud, etc.: 100-200€<br><br>
+
+                    <span class="price-tag">BUDGET TOTAL: 1000-1350€</span>
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-title">🎒 À Emporter</div>
+                <div class="activity-description">
+                    ❄️ <strong>Vêtements chauds:</strong><br>
+                    • Manteau d'hiver<br>
+                    • Écharpe, bonnet, gants<br>
+                    • Pulls chauds<br>
+                    • Chaussures confortables et imperméables<br><br>
+
+                    📱 <strong>Essentiels:</strong><br>
+                    • Carte d'identité/Passeport<br>
+                    • Carte bancaire + espèces<br>
+                    • Chargeur de téléphone<br>
+                    • Batterie externe<br>
+                    • Appareil photo<br><br>
+
+                    🎟️ <strong>Billets & Réservations:</strong><br>
+                    • Confirmations trains<br>
+                    • Vouchers hôtels<br>
+                    • Réservations restaurants
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-title">📱 Applications Utiles</div>
+                <div class="activity-description">
+                    🚆 <strong>SNCF Connect:</strong> Trains et horaires<br>
+                    🚇 <strong>RATP / Île-de-France Mobilités:</strong> Métro Paris<br>
+                    🗺️ <strong>Google Maps:</strong> Navigation<br>
+                    🍴 <strong>TheFork:</strong> Réservations restaurants<br>
+                    ☁️ <strong>Météo France:</strong> Prévisions<br>
+                    💶 <strong>Lydia/PayPal:</strong> Paiements rapides
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-title">🎄 Marchés de Noël - Horaires</div>
+                <div class="activity-description">
+                    <strong>Strasbourg:</strong><br>
+                    📅 Tous les jours: 11h-20h<br>
+                    📅 Vendredi-Samedi: 11h-21h<br><br>
+
+                    <strong>Colmar:</strong><br>
+                    📅 Tous les jours: 10h-19h<br><br>
+
+                    <strong>Paris (Champs-Élysées):</strong><br>
+                    📅 Tous les jours: 10h-23h
+                </div>
+            </div>
+
+            <div class="activity-section">
+                <div class="activity-title">🚨 Contacts Urgence</div>
+                <div class="activity-description">
+                    🚑 <strong>SAMU:</strong> 15<br>
+                    🚓 <strong>Police:</strong> 17<br>
+                    🚒 <strong>Pompiers:</strong> 18<br>
+                    📞 <strong>Urgences UE:</strong> 112<br><br>
+
+                    🏨 <strong>Hôtels:</strong> Coordonnées après réservation<br>
+                    🚆 <strong>SNCF:</strong> 3635
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <div class="tips-title">⚠️ Conseils Importants</div>
+                ✅ Réservez trains et hôtels dès que possible<br>
+                ✅ Période de Noël = forte affluence<br>
+                ✅ Attention aux pickpockets dans les lieux touristiques<br>
+                ✅ Gardez une copie numérique de vos documents<br>
+                ✅ Arrivez en avance pour les restaurants populaires
+            </div>
+
+            <div class="map-placeholder">
+                <h3>🗺️ CARTE INTERACTIVE</h3>
+                <p>Vous pouvez ajouter ici une carte Google Maps personnalisée<br>
+                avec tous les points d'intérêt marqués pour Eloan</p>
+            </div>
+        </div>
+
+        <footer>
+            <h2 style="color: #667eea; margin-bottom: 20px;">📞 Besoin d'aide pendant le voyage ?</h2>
+            <div class="contacts">
+                <div class="contact-item">
+                    <strong>📧 Email</strong><br>
+                    voyage@roadbook.com
+                </div>
+                <div class="contact-item">
+                    <strong>📱 Téléphone</strong><br>
+                    +33 X XX XX XX XX
+                </div>
+                <div class="contact-item">
+                    <strong>💬 WhatsApp</strong><br>
+                    Support 24/7
+                </div>
+            </div>
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #f0f0f0;">
+                <p style="color: #667eea; font-size: 1.2em; font-weight: bold;">
+                    Bon voyage Eloan ! 🎉✨
+                </p>
+                <p style="color: #999; margin-top: 10px;">
+                    Roadbook créé spécialement pour Eloan Calmels - Décembre 2024
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function showDay(dayNumber) {
+            // Masquer toutes les cartes
+            const allCards = document.querySelectorAll('.day-card');
+            allCards.forEach(card => card.classList.remove('active'));
+            
+            // Désactiver tous les boutons
+            const allButtons = document.querySelectorAll('.tab-btn');
+            allButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Afficher la carte sélectionnée
+            document.getElementById('day' + dayNumber).classList.add('active');
+            
+            // Activer le bouton cliqué
+            event.target.classList.add('active');
+            
+            // Scroll vers le haut
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
-
